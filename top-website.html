@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP - Discover The Best Anime & Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F4E4B0;
+            --gold-dark: #B8941F;
+            --navy: #0A1628;
+            --navy-light: #1A2942;
+            --navy-lighter: #2A3952;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B8C5D6;
+            --accent-blue: #4A90E2;
+            --accent-purple: #9B59B6;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--navy);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(74, 144, 226, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(155, 89, 182, 0.03) 0%, transparent 50%);
+        }
+
+        .background-overlay::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 22, 40, 0.98);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .btn {
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--navy);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--navy);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--gold);
+            border-radius: 25px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0%, 100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(15px);
+            }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            padding: 8rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .tab {
+            padding: 1rem 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .tab:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--navy);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Featured Card */
+        .featured-card {
+            background: linear-gradient(135deg, var(--navy-light), var(--navy-lighter));
+            border-radius: 24px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .featured-card:hover::before {
+            opacity: 1;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-color: var(--gold);
+        }
+
+        .featured-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-card:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .featured-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-label {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rating {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .featured-description {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .featured-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1.25rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--gold-light);
+        }
+
+        /* Grid Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--navy-light);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-image {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        .card-rank {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 45px;
+            height: 45px;
+            background: rgba(10, 22, 40, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .card-content {
+            padding: 1.75rem;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, var(--navy-light), var(--navy-lighter));
+            border-radius: 24px;
+            padding: 5rem;
+            margin: 8rem 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 4rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(212, 175, 55, 0.1);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-light);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 4rem 0 2rem;
+            margin-top: 8rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .featured-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .category-tabs {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .featured-card {
+                padding: 2rem;
+            }
+
+            .featured-title {
+                font-size: 2rem;
+            }
+
+            .stats-section {
+                padding: 3rem 2rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">TOP</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#anime">Anime</a></li>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-subtitle">Curated Excellence</div>
+            <h1 class="hero-title">Discover The<br>Best of Everything</h1>
+            <p class="hero-description">
+                Experience the pinnacle of entertainment with our expertly curated collection 
+                of the world's finest anime and games. Quality above all.
+            </p>
+            <div class="hero-cta">
+                <a href="#anime" class="btn btn-primary">Explore Anime</a>
+                <a href="#games" class="btn btn-secondary">Discover Games</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Anime Section -->
+    <section class="section" id="anime">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Premium Selection</div>
+                <h2 class="section-title">Top Rated Anime</h2>
+                <p class="section-description">
+                    Immerse yourself in the most acclaimed anime series and films, 
+                    handpicked for their exceptional storytelling and artistic brilliance.
+                </p>
+            </div>
+
+            <!-- Featured Anime -->
+            <div id="featuredAnime"></div>
+
+            <!-- Anime Grid -->
+            <div class="cards-grid" id="animeGrid"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="container">
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label">Curated Titles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="1000000">0</div>
+                    <div class="stat-label">Happy Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">Updates Daily</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section class="section" id="games">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Gaming Excellence</div>
+                <h2 class="section-title">Top Rated Games</h2>
+                <p class="section-description">
+                    Explore the most celebrated gaming experiences across all platforms, 
+                    from indie masterpieces to AAA blockbusters.
+                </p>
+            </div>
+
+            <!-- Featured Game -->
+            <div id="featuredGame"></div>
+
+            <!-- Games Grid -->
+            <div class="cards-grid" id="gamesGrid"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">TOP</div>
+            <p class="footer-text">
+                Curating excellence in entertainment since 2024.<br>
+                Your gateway to the world's finest anime and games.
+            </p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TOP. All rights reserved. Crafted with passion for quality.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Database
+        const animeDatabase = [
+            {
+                rank: 1,
+                title: "Attack on Titan: Final Season",
+                year: "2023",
+                episodes: "87 Episodes",
+                rating: "9.2",
+                genre: "Dark Fantasy",
+                tags: ["Action", "Mystery", "Military"],
+                description: "The culmination of humanity's desperate struggle against the Titans reaches its epic conclusion. Secrets are revealed, alliances shift, and the true nature of the world is unveiled in this masterful finale.",
+                image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&h=1000&fit=crop",
+                featured: true
+            },
+            {
+                rank: 2,
+                title: "Demon Slayer: Kimetsu no Yaiba",
+                year: "2019",
+                episodes: "44 Episodes",
+                rating: "8.9",
+                genre: "Historical Fantasy",
+                tags: ["Action", "Demons", "Swordplay"],
+                description: "A tale of vengeance and redemption as Tanjiro battles demons while seeking to restore his sister's humanity. Breathtaking animation and compelling characters.",
+                image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 3,
+                title: "Steins;Gate",
+                year: "2011",
+                episodes: "24 Episodes",
+                rating: "9.1",
+                genre: "Sci-Fi Thriller",
+                tags: ["Time Travel", "Psychological", "Drama"],
+                description: "A mind-bending journey through time where every decision has consequences. Masterful storytelling that keeps you on the edge of your seat.",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 4,
+                title: "Fullmetal Alchemist: Brotherhood",
+                year: "2009",
+                episodes: "64 Episodes",
+                rating: "9.2",
+                genre: "Dark Fantasy",
+                tags: ["Alchemy", "Adventure", "Military"],
+                description: "Two brothers seek the Philosopher's Stone in a world governed by alchemy. A perfect blend of action, philosophy, and emotional depth.",
+                image: "https://images.unsplash.com/photo-1509773896068-7fd415d91e2e?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 5,
+                title: "Your Name",
+                year: "2016",
+                episodes: "Film",
+                rating: "8.8",
+                genre: "Romantic Fantasy",
+                tags: ["Drama", "Supernatural", "Romance"],
+                description: "A beautiful tale of two souls connected across time and space. Stunning visuals meet heartfelt storytelling in this modern masterpiece.",
+                image: "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 6,
+                title: "Death Note",
+                year: "2006",
+                episodes: "37 Episodes",
+                rating: "9.0",
+                genre: "Psychological Thriller",
+                tags: ["Mystery", "Supernatural", "Thriller"],
+                description: "A deadly game of cat and mouse between genius minds. The power to kill with a name creates the ultimate moral dilemma.",
+                image: "https://images.unsplash.com/photo-1516410529446-2c777cb7366d?w=800&h=1000&fit=crop"
+            }
+        ];
+
+        const gamesDatabase = [
+            {
+                rank: 1,
+                title: "Elden Ring",
+                year: "2022",
+                platform: "Multi-platform",
+                rating: "9.5",
+                genre: "Action RPG",
+                tags: ["Open World", "Fantasy", "Challenging"],
+                description: "FromSoftware's magnum opus combines breathtaking open-world exploration with their signature challenging gameplay. A masterclass in game design that redefines the action RPG genre.",
+                image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&h=1000&fit=crop",
+                featured: true
+            },
+            {
+                rank: 2,
+                title: "The Legend of Zelda: Tears of the Kingdom",
+                year: "2023",
+                platform: "Nintendo Switch",
+                rating: "9.6",
+                genre: "Action-Adventure",
+                tags: ["Open World", "Exploration", "Puzzle"],
+                description: "Nintendo's masterpiece builds upon perfection with innovative mechanics and boundless creativity. Every moment is an adventure in Hyrule.",
+                image: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 3,
+                title: "Baldur's Gate 3",
+                year: "2023",
+                platform: "PC, PS5",
+                rating: "9.5",
+                genre: "RPG",
+                tags: ["Story-Driven", "Turn-Based", "Fantasy"],
+                description: "Larian Studios delivers the ultimate D&D experience with unprecedented freedom and consequences. Every choice matters in this epic tale.",
+                image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 4,
+                title: "God of War Ragnarök",
+                year: "2022",
+                platform: "PS5, PS4",
+                rating: "9.4",
+                genre: "Action-Adventure",
+                tags: ["Story-Driven", "Combat", "Norse Mythology"],
+                description: "Kratos and Atreus embark on an epic journey through Norse realms. Stunning visuals and emotional storytelling at its finest.",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 5,
+                title: "Hades",
+                year: "2020",
+                platform: "Multi-platform",
+                rating: "9.3",
+                genre: "Roguelike",
+                tags: ["Action", "Greek Mythology", "Indie"],
+                description: "Supergiant Games' masterful roguelike combines addictive gameplay with rich storytelling. Every run tells a new story in the underworld.",
+                image: "https://images.unsplash.com/photo-1556438758-8d49568ce18e?w=800&h=1000&fit=crop"
+            },
+            {
+                rank: 6,
+                title: "Red Dead Redemption 2",
+                year: "2018",
+                platform: "Multi-platform",
+                rating: "9.7",
+                genre: "Action-Adventure",
+                tags: ["Open World", "Western", "Story-Driven"],
+                description: "Rockstar's masterpiece delivers an unparalleled open-world experience. A living, breathing Wild West that sets new standards for gaming.",
+                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=1000&fit=crop"
+            }
+        ];
+
+        // Render Functions
+        function renderFeaturedAnime() {
+            const featured = animeDatabase.find(anime => anime.featured);
+            if (!featured) return;
+
+            const html = `
+                <div class="featured-card">
+                    <div class="featured-image">
+                        <div class="rank-badge">#${featured.rank}</div>
+                        <img src="${featured.image}" alt="${featured.title}">
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-label">Featured Anime</div>
+                        <h3 class="featured-title">${featured.title}</h3>
+                        <div class="featured-meta">
+                            <div class="meta-item">
+                                <span>📅</span>
+                                <span>${featured.year}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>🎬</span>
+                                <span>${featured.episodes}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>⭐</span>
+                                <span class="rating">${featured.rating}/10</span>
+                            </div>
+                        </div>
+                        <p class="featured-description">${featured.description}</p>
+                        <div class="featured-tags">
+                            ${featured.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <a href="#" class="btn btn-primary">Watch Now</a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('featuredAnime').innerHTML = html;
+        }
+
+        function renderAnimeGrid() {
+            const nonFeatured = animeDatabase.filter(anime => !anime.featured);
+            const html = nonFeatured.map(anime => `
+                <div class="card">
+                    <div class="card-image">
+                        <div class="card-rank">#${anime.rank}</div>
+                        <img src="${anime.image}" alt="${anime.title}">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${anime.title}</h3>
+                        <div class="card-meta">
+                            <span>📅 ${anime.year}</span>
+                            <span>⭐ ${anime.rating}/10</span>
+                        </div>
+                        <p class="card-description">${anime.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('animeGrid').innerHTML = html;
+        }
+
+        function renderFeaturedGame() {
+            const featured = gamesDatabase.find(game => game.featured);
+            if (!featured) return;
+
+            const html = `
+                <div class="featured-card">
+                    <div class="featured-image">
+                        <div class="rank-badge">#${featured.rank}</div>
+                        <img src="${featured.image}" alt="${featured.title}">
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-label">Featured Game</div>
+                        <h3 class="featured-title">${featured.title}</h3>
+                        <div class="featured-meta">
+                            <div class="meta-item">
+                                <span>📅</span>
+                                <span>${featured.year}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>🎮</span>
+                                <span>${featured.platform}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>⭐</span>
+                                <span class="rating">${featured.rating}/10</span>
+                            </div>
+                        </div>
+                        <p class="featured-description">${featured.description}</p>
+                        <div class="featured-tags">
+                            ${featured.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <a href="#" class="btn btn-primary">Play Now</a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('featuredGame').innerHTML = html;
+        }
+
+        function renderGamesGrid() {
+            const nonFeatured = gamesDatabase.filter(game => !game.featured);
+            const html = nonFeatured.map(game => `
+                <div class="card">
+                    <div class="card-image">
+                        <div class="card-rank">#${game.rank}</div>
+                        <img src="${game.image}" alt="${game.title}">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${game.title}</h3>
+                        <div class="card-meta">
+                            <span>🎮 ${game.platform}</span>
+                            <span>⭐ ${game.rating}/10</span>
+                        </div>
+                        <p class="card-description">${game.description}</p>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('gamesGrid').innerHTML = html;
+        }
+
+        // Animated Counter
+        function animateCounter() {
+            const counters = document.querySelectorAll('.stat-number');
+            const speed = 200;
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const updateCount = () => {
+                    const count = parseInt(counter.innerText.replace(/,/g, ''));
+                    const increment = target / speed;
+
+                    if (count < target) {
+                        const newCount = Math.ceil(count + increment);
+                        counter.innerText = newCount.toLocaleString();
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target.toLocaleString() + (target >= 1000000 ? '+' : '');
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Scroll Effects
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stat-number')) {
+                        animateCounter();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            observer.observe(stat);
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFeaturedAnime();
+            renderAnimeGrid();
+            renderFeaturedGame();
+            renderGamesGrid();
+        });
+    </script>
+</body>
+</html>
